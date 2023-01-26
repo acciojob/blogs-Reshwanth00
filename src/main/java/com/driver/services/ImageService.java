@@ -18,13 +18,26 @@ public class ImageService {
     private BlogRepository blogRepository;
 
     public Image createAndReturn(Blog blog, String description, String dimensions){
-        Image image = new Image();
-        image.setDescription(description);
+        Image image=new Image();
         image.setDimensions(dimensions);
-        blog.getImageList().add(image);
-        blogRepository.save(blog);
+        image.setDescription(description);
+        image.setBlog(blog);
+        List<Image> res=blog.getImageList();
+        if(res==null){
+            res=new ArrayList<>();
+        }
+        res.add(image);
+        blog.setImageList(res);
         imageRepository2.save(image);
+        blogRepository.save(blog);
         return image;
+//        Image image = new Image();
+//        image.setDescription(description);
+//        image.setDimensions(dimensions);
+//        blog.getImageList().add(image);
+//        blogRepository.save(blog);
+//        imageRepository2.save(image);
+//        return image;
     }
 
     public void deleteImage(Image image){
