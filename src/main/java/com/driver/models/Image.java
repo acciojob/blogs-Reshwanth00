@@ -40,7 +40,7 @@ public class Image {
         setDimensions(dimensions);
         setId(id);
     }
-    @OneToMany
+    @ManyToOne
     @JoinColumn
     private Blog blog;
 
