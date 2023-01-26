@@ -47,7 +47,9 @@ public class ImageService {
     public Image findById(int id) {
         return imageRepository2.findById(id).get();
     }
-
+    public void deleteImage(int id){
+        deleteImage(imageRepository2.findById(id).get());
+    }
     public int countImagesInScreen(Image image, String screenDimensions) {
         if (screenDimensions.split("X").length == 2 || Objects.nonNull(image)) {
             Integer maxLength = Integer.parseInt(screenDimensions.split("X")[0]) / Integer.parseInt(image.getDimensions().split("X")[0]) ;
