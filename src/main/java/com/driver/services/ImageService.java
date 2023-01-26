@@ -18,19 +18,13 @@ public class ImageService {
     private BlogRepository blogRepository;
 
     public Image createAndReturn(Blog blog, String description, String dimensions){
-        //create an image based on given parameters and add it to the imageList of given blog
-        Image image=new Image(description,dimensions);
-        image.setBlog(blog);
-        List<Image> res=blog.getImageList();
-        if(res==null){
-            res=new ArrayList<>();
-        }
-        res.add(image);
-        blog.setImageList(res);
-        imageRepository2.save(image);
+        Image image = new Image();
+        image.setDescription(description);
+        image.setDimensions(dimensions);
+        blog.getImageList().add(image);
         blogRepository.save(blog);
+        imageRepository2.save(image);
         return image;
-
     }
 
     public void deleteImage(Image image){
@@ -42,14 +36,11 @@ public class ImageService {
     }
 
     public int countImagesInScreen(Image image, String screenDimensions) {
-        //Find the number of images of given dimensions that can fit in a screen having `screenDimensions`
-        //In case the image is null, return 0
         if (screenDimensions.split("X").length == 2 || Objects.nonNull(image)) {
             Integer maxLength = Integer.parseInt(screenDimensions.split("X")[0]) / Integer.parseInt(image.getDimensions().split("X")[0]) ;
             Integer maxBreadth = Integer.parseInt(screenDimensions.split("X")[1]) / Integer.parseInt(image.getDimensions().split("X")[1]);
             return maxLength * maxBreadth;
         }
         return 0;
-
     }
 }
